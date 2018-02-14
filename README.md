@@ -10,7 +10,7 @@ SendMessageToDesktop();//发送消息
 HWND desktopWnd=findDesktopIconWnd();//获取桌面句柄
 SetParent(yourHwnd,desktopWnd);//设置父窗口
 `
-
+- **注意事项** ：采用QMediaPlayer，使用时需要安装解码器。能播放的视频取决于解码器的设置。
 -------------------
 ###DEMO展示
 ![](demotest.jpg)
