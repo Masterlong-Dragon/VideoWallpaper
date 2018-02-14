@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>视频壁纸</string>
+   <string>动态壁纸</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QPushButton" name="Play">

@@ -27,14 +27,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp\
         mainwindow.cpp \
     finddesktop.cpp \
-    videowindow.cpp
+    videowindow.cpp \
+    gifwindow.cpp
 
 HEADERS  += mainwindow.h \
     finddesktop.h \
-    videowindow.h
+    videowindow.h \
+    gifwindow.h
 
 FORMS    += mainwindow.ui \
-    videowindow.ui
+    videowindow.ui \
+    gifwindow.ui
 
 #RESOURCES += \
 #    resources.qrc

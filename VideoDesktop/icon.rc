@@ -7,8 +7,8 @@ IDI_ICON1       ICON      "logo.ico"
 #endif
 
 VS_VERSION_INFO VERSIONINFO
-    FILEVERSION 1,2,0,00
-    PRODUCTVERSION 1,2,0,00
+    FILEVERSION 1,3,0,00
+    PRODUCTVERSION 1,3,0,00
     FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
     FILEFLAGS VS_FF_DEBUG
@@ -25,12 +25,12 @@ VS_VERSION_INFO VERSIONINFO
             BEGIN
                 VALUE "CompanyName", "dragonkkd\0"
                 VALUE "FileDescription", "应用程序\0"
-                VALUE "FileVersion", "1.2.0.00\0"
-                VALUE "ProductVersion", "1.2.0.00\0"
+                VALUE "FileVersion", "1.3.0.00\0"
+                VALUE "ProductVersion", "1.3.0.00\0"
                 VALUE "LegalCopyright", "版权所有 (C) dragonkkd\0"
                 VALUE "LegalTrademarks", "dragonkkd\0"
-                VALUE "OriginalFilename", "视频壁纸.exe\0"
-                VALUE "ProductName", "视频壁纸\0"
+                VALUE "OriginalFilename", "动态壁纸.exe\0"
+                VALUE "ProductName", "动态壁纸\0"
                 VALUE "InternalName", "videodesktop.exe\0"
            END
         END

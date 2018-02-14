@@ -22,7 +22,7 @@ VideoWindow::VideoWindow(QWidget *parent) :
     player->setVolume(0);//默认静音
     PlayerState=QMediaPlaylist::CurrentItemInLoop;//默认循环
     connect(player,SIGNAL(durationChanged(qint64)),this,SLOT(setD(qint64)));//获取视频时长
-    connect(player,SIGNAL(positionChanged(qint64)),this,SLOT(RestVideo(qint64)));//获取播放位置
+    connect(player,SIGNAL(positionChanged(qint64)),this,SLOT(ResetVideo(qint64)));//获取播放位置
 }
 
 VideoWindow::~VideoWindow()
@@ -35,12 +35,18 @@ void VideoWindow::StartPlay(QString path)
     player->play();//播放
 }
 
+void VideoWindow::StopPlay()
+{
+    if(player->state()==QMediaPlayer::PlayingState)
+        player->stop();//停止播放原来的视频
+}
+
 void VideoWindow::setD(qint64 d)
 {
     duration=d;
 }
 
-void VideoWindow::RestVideo(qint64 currentInfo)
+void VideoWindow::ResetVideo(qint64 currentInfo)
 {
     if(PlayerState==QMediaPlaylist::CurrentItemInLoop)//如果循环
         if(currentInfo==duration)

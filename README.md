@@ -14,3 +14,6 @@ SetParent(yourHwnd,desktopWnd);//设置父窗口
 -------------------
 ###DEMO展示
 ![](demotest.jpg)
+![](test1.jpg)
+**支持gif** 
+![](test2.jpg)
