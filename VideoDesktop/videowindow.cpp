@@ -1,4 +1,4 @@
-#include "videowindow.h"
+﻿#include "videowindow.h"
 #include "ui_videowindow.h"
 
 VideoWindow::VideoWindow(QWidget *parent) :

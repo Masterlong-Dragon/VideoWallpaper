@@ -1,4 +1,4 @@
-#include "gifwindow.h"
+﻿#include "gifwindow.h"
 #include "ui_gifwindow.h"
 
 GifWindow::GifWindow(QWidget *parent) :
@@ -30,6 +30,12 @@ void GifWindow::StartPlay(QString path)
     ui->gifLable->resize(window()->size());
     movie->start();//启动动画
     connect(movie,SIGNAL(frameChanged(int)),this,SLOT(ResetGif(int)));//是否重新播放
+}
+
+void GifWindow::StopPlay()
+{
+    if(filePath!="")
+        movie->stop();
 }
 
 void GifWindow::ResetGif(int currentFrame)

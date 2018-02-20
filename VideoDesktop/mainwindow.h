@@ -1,10 +1,11 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
 #include "videowindow.h"
 #include "gifwindow.h"
 #include "finddesktop.h"
+#include "webwindow.h"
 #include <QCloseEvent>
 #include <QFile>
 #include <QFileDialog>
@@ -31,6 +32,7 @@ private:
     Ui::MainWindow *ui;
     VideoWindow v;//声明一个videowindow
     GifWindow g;//声明一个gifwindow
+    WebWindow w;//声明一个webwindow
     void closeEvent(QCloseEvent *event);//重写关闭事件
 };
 

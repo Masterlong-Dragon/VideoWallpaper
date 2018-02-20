@@ -1,4 +1,4 @@
-#ifndef GIFWINDOW_H
+﻿#ifndef GIFWINDOW_H
 #define GIFWINDOW_H
 
 #include <QMainWindow>
@@ -18,6 +18,7 @@ public:
     explicit GifWindow(QWidget *parent = 0);
     ~GifWindow();
     void StartPlay(QString path);//开始
+    void StopPlay();//结束
     int PlayerState;//播放状态
     QMovie *movie;//movie
     QString filePath;

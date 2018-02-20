@@ -5,7 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
-QT       += multimedia multimediawidgets
+QT       += multimedia multimediawidgets webenginewidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,16 +28,23 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     finddesktop.cpp \
     videowindow.cpp \
-    gifwindow.cpp
+    gifwindow.cpp \
+    webwindow.cpp \
+    mousehook.cpp \
+    mywebengnineview.cpp
 
 HEADERS  += mainwindow.h \
     finddesktop.h \
     videowindow.h \
-    gifwindow.h
+    gifwindow.h \
+    webwindow.h \
+    mousehook.h \
+    mywebengnineview.h
 
 FORMS    += mainwindow.ui \
     videowindow.ui \
-    gifwindow.ui
+    gifwindow.ui \
+    webwindow.ui
 
 #RESOURCES += \
 #    resources.qrc

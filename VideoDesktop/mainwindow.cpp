@@ -6,8 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect(ui->Volume,SIGNAL(valueChanged(int)),v.player,SLOT(setVolume(int)));//å°†æ»‘åŠ¨æ¡ä¸è§†é¢‘éŸ³é‡ç»‘å®š
-    ui->checkBox->setCheckState(Qt::Checked);//é»˜è®¤é€‰ä¸­
+    connect(ui->Volume,SIGNAL(valueChanged(int)),v.player,SLOT(setVolume(int)));//½«»¬¶¯ÌõÓëÊÓÆµÒôÁ¿°ó¶¨
+    ui->checkBox->setCheckState(Qt::Checked);//Ä¬ÈÏÑ¡ÖĞ
 }
 
 MainWindow::~MainWindow()
@@ -17,71 +17,90 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_Play_clicked()
 {
-    v.hide();//éšè—
-    g.hide();//éšè—
-    v.StopPlay();//åœæ­¢æ’­æ”¾ï¼ˆåŸæ¥çš„è§†é¢‘ï¼‰
-    if(desktopWnd) //è®¾ç½®çˆ¶çª—ä½“ä¸ºæ¡Œé¢
+    ui->fileName->clear();
+    if(desktopWnd) //ÉèÖÃ¸¸´°ÌåÎª×ÀÃæ
     {
         SetParent((HWND)v.winId(), desktopWnd);
         SetParent((HWND)g.winId(), desktopWnd);
+        SetParent((HWND)w.winId(), desktopWnd);
     }
-    //v.setWindowState(Qt::WindowMaximized);//æœ€å¤§åŒ–
-    if(!(ui->PathEdit->toPlainText().contains(".gif")))//ä¸åŒ…å«.gif
+    QRegExp rx("(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]");//for url
+    QString filePath=ui->PathEdit->toPlainText();//get path
+    ui->PathEdit->clear();//clear edit
+    filePath.remove("file:///");//½â¾öÍÏ×§Â·¾¶µÄÎÊÌâ
+    v.hide();//Òş²Ø
+    g.hide();//Òş²Ø
+    w.hide();//Òş²Ø
+    v.StopPlay();//Í£Ö¹²¥·Å£¨Ô­À´µÄÊÓÆµ£©
+    g.StopPlay();//Í£Ö¹²¥·Å£¨Ô­À´µÄGIF£©
+    w.StopPlay();//Í£Ö¹²¥·Å£¨Ô­À´µÄweb£©
+    if(filePath!=""&&filePath.contains(".mp4")||filePath.contains(".avi")||filePath.contains(".mkv"))//videos
     {
-        if(ui->PathEdit->toPlainText()!="")//å¦‚æœä¸ä¸ºç©º
-        {
-            v.setWindowFlags(Qt::FramelessWindowHint);//æ— è¾¹æ¡†
-            v.setWindowFlags(Qt::Dialog);//æå‡ä¸ºé¡¶çº§çª—å£
-            v.showFullScreen();//showtimeï¼å…¨å±ï¼
-            v.StartPlay(ui->PathEdit->toPlainText());//å°†æ§ä»¶æ–‡æœ¬ä¼ å…¥æ’­æ”¾è·¯å¾„
-        }
-        else
-            QMessageBox::warning(this,"è›¤ï¼Ÿ","<h1>æ²¡æœ‰é€‰æ‹©<font color='red'>åª’ä½“</font>ï¼</h1>");//è¿·ä¹‹è­¦å‘Š
+  //Èç¹û²»Îª¿Õ
+         v.setWindowFlags(Qt::FramelessWindowHint);//ÎŞ±ß¿ò
+         v.setWindowFlags(Qt::Dialog);//ÌáÉıÎª¶¥¼¶´°¿Ú
+         v.showFullScreen();//showtime£¡È«ÆÁ£¡
+         v.StartPlay(filePath);//½«¿Ø¼şÎÄ±¾´«Èë²¥·ÅÂ·¾¶
+         showMinimized();//×îĞ¡»¯
+         ui->fileName->setText(filePath);//¸üĞÂ¿Ø¼şÎÄ±¾
     }
     else
-        if(ui->PathEdit->toPlainText()!="")//å¦‚æœä¸ä¸ºç©ºï¼Œæ˜¯gif
+        if(filePath!=""&&filePath.contains(".gif"))//Èç¹û²»Îª¿Õ£¬ÊÇgif
         {
-            g.setWindowFlags(Qt::FramelessWindowHint);//æ— è¾¹æ¡†
-            g.setWindowFlags(Qt::Dialog);//æå‡ä¸ºé¡¶çº§çª—å£
-            g.showFullScreen();//showtimeï¼å…¨å±ï¼
-            g.StartPlay(ui->PathEdit->toPlainText());//å°†æ§ä»¶æ–‡æœ¬ä¼ å…¥æ’­æ”¾è·¯å¾„
+            g.setWindowFlags(Qt::FramelessWindowHint);//ÎŞ±ß¿ò
+            g.setWindowFlags(Qt::Dialog);//ÌáÉıÎª¶¥¼¶´°¿Ú
+            g.showFullScreen();//showtime£¡È«ÆÁ£¡
+            g.StartPlay(filePath);//½«¿Ø¼şÎÄ±¾´«Èë²¥·ÅÂ·¾¶
+            showMinimized();//×îĞ¡»¯
+            ui->fileName->setText(filePath);//¸üĞÂ¿Ø¼şÎÄ±¾
         }
         else
-            QMessageBox::warning(this,"è›¤ï¼Ÿ","<h1>æ²¡æœ‰é€‰æ‹©<font color='red'>åª’ä½“</font>ï¼</h1>");//è¿·ä¹‹è­¦å‘Š
+            if(filePath!=""&&filePath.contains(".html")||rx.exactMatch(filePath))//Èç¹û²»Îª¿Õ£¬ÊÇhtml(url)
+            {
+                w.setWindowFlags(Qt::FramelessWindowHint);//ÎŞ±ß¿ò
+                w.setWindowFlags(Qt::Dialog);//ÌáÉıÎª¶¥¼¶´°¿Ú
+                w.StartPlay(filePath);//½«¿Ø¼şÎÄ±¾´«Èë²¥·ÅÂ·¾¶
+                SetCursorPos(window()->pos().x(), window()->pos().y()+50);  //ÆÁÄ»×ø±ê
+                mouse_event(MOUSEEVENTF_LEFTDOWN | MOUSEEVENTF_LEFTUP, 0, 0, 0, 0);//Ï¹µãÒ»ÏÂ£¬ÈÃÏµÍ³ÏìÓ¦
+                showMinimized();//×îĞ¡»¯
+                ui->fileName->setText(filePath);//¸üĞÂ¿Ø¼şÎÄ±¾
+            }
+            else
+                QMessageBox::warning(this,QString::fromLocal8Bit("¸ò£¿"),QString::fromLocal8Bit("<h1>Ã»ÓĞÑ¡Ôñ<font color='red'>Ã½Ìå</font>£¡</h1>"));//ÃÔÖ®¾¯¸æ
 
 }
-void MainWindow::closeEvent(QCloseEvent *event)//é‡å†™å…³é—­äº‹ä»¶
+void MainWindow::closeEvent(QCloseEvent *event)//ÖØĞ´¹Ø±ÕÊÂ¼ş
 {
-    v.~VideoWindow();//å…³é—­vidioewindowï¼Œä¸è¿™ä¹ˆå†™çš„è¯ä¼šå¯¼è‡´çª—å£ä¸€ç›´æŒ‚ç€
-    g.~GifWindow();//å…³é—­gifwindowï¼Œä¸è¿™ä¹ˆå†™çš„è¯ä¼šå¯¼è‡´çª—å£ä¸€ç›´æŒ‚ç€
-    ShellExecuteA(NULL,"open","cmd.exe","taskkill /f /im explorer.exe & start explorer.exe",NULL,SW_HIDE);//é‡å¯ä»»åŠ¡ç®¡ç†å™¨
+    v.~VideoWindow();//¹Ø±Õvidioewindow£¬²»ÕâÃ´Ğ´µÄ»°»áµ¼ÖÂ´°¿ÚÒ»Ö±¹Ò×Å
+    g.~GifWindow();//¹Ø±Õgifwindow£¬²»ÕâÃ´Ğ´µÄ»°»áµ¼ÖÂ´°¿ÚÒ»Ö±¹Ò×Å
+    w.deleteLater();//¹Ø±Õwebwindow£¬²»ÕâÃ´Ğ´µÄ»°»áµ¼ÖÂ´°¿ÚÒ»Ö±¹Ò×Å
     event->accept();
 }
 
 void MainWindow::on_FileOpen_clicked()
 {
-    //æ–‡ä»¶é€‰å–
-    QString media =QFileDialog::getOpenFileName(this,tr("é€‰æ‹©ä½œä¸ºå£çº¸çš„è§†é¢‘"),"/home",tr("åª’ä½“æ–‡ä»¶(*.mp4 *.avi *.gif)"));
+    //ÎÄ¼şÑ¡È¡
+    QString media =QFileDialog::getOpenFileName(this,QString::fromLocal8Bit("Ñ¡Ôñ×÷Îª±ÚÖ½µÄÊÓÆµ"),"",QString::fromLocal8Bit("Ã½ÌåÎÄ¼ş(*.mp4 *.avi *.mkv *.gif *.html)"));
     ui->PathEdit->setText(media);
 }
 
 void MainWindow::on_checkBox_stateChanged(int arg1)
 {
-    if(arg1==Qt::Checked)//è¢«é€‰ä¸­
+    if(arg1==Qt::Checked)//±»Ñ¡ÖĞ
     {
-        v.PlayerState = QMediaPlaylist::CurrentItemInLoop;//å¾ªç¯æ’­æ”¾
+        v.PlayerState = QMediaPlaylist::CurrentItemInLoop;//Ñ­»·²¥·Å
         if(v.player->state()==QMediaPlayer::StoppedState)
             v.player->play();
-        g.PlayerState = QMediaPlaylist::CurrentItemInLoop;//å¾ªç¯æ’­æ”¾
-        if(g.filePath!="")//ä¸ä¸ºç©º
+        g.PlayerState = QMediaPlaylist::CurrentItemInLoop;//Ñ­»·²¥·Å
+        if(g.filePath!="")//²»Îª¿Õ
         {
             g.movie->setPaused(false);
-            g.movie->start();//é‡ç½®æ’­æ”¾
+            g.movie->start();//ÖØÖÃ²¥·Å
         }
     }
     else
     {
-        v.PlayerState = QMediaPlaylist::CurrentItemOnce;//æ’­ä¸€æ¬¡
-        g.PlayerState = QMediaPlaylist::CurrentItemOnce;//æ’­ä¸€æ¬¡
+        v.PlayerState = QMediaPlaylist::CurrentItemOnce;//²¥Ò»´Î
+        g.PlayerState = QMediaPlaylist::CurrentItemOnce;//²¥Ò»´Î
     }
 }

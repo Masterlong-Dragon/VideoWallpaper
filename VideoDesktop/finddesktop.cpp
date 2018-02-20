@@ -1,4 +1,5 @@
-#include"finddesktop.h"
+﻿#include"finddesktop.h"
+HWND WorkerW=NULL;
 
 HWND findDesktopIconWnd()
 {
@@ -11,6 +12,7 @@ HWND findDesktopIconWnd()
     while ((!hDefView) && hWorkerW)
     {
         hDefView = FindWindowEx(hWorkerW, NULL, L"SHELLDLL_DefView", NULL);
+        WorkerW=hWorkerW;//得到WorkerW
         hWorkerW = FindWindowEx(NULL, hWorkerW, L"WorkerW", NULL);
     }
     //隐藏窗口，不让mainwindow被挡住
@@ -25,5 +27,8 @@ void SendMessageToDesktop()
      SendMessageTimeout(FindWindow(L"Progman",NULL), 0x52c, 0, 0, SMTO_NORMAL, 1000, result);
 }
 
-
-
+HWND GetWorkerW()
+{
+    findDesktopIconWnd();
+    return WorkerW;//得到WorkerW
+}
