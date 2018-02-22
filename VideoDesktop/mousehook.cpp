@@ -2,7 +2,8 @@
 HHOOK mouseHook=NULL;//mouse hook
 HWND WinId=NULL;//web窗口的句柄
 HWND hWorkerW=GetWorkerW();//获取WorkerW的句柄
-UINT16 codes[]={MK_LBUTTON,MK_RBUTTON,MK_MBUTTON,MK_XBUTTON1,MK_XBUTTON1};//鼠标消息的编码
+UINT16 buttonMsg=0;//声明
+UINT16 lastMsg=0;//声明
 LRESULT CALLBACK mouseProc(int nCode,WPARAM wParam,LPARAM lParam )//钩子回调函数
 
 {
@@ -11,18 +12,20 @@ LRESULT CALLBACK mouseProc(int nCode,WPARAM wParam,LPARAM lParam )//钩子回调
         POINT p;//定义一个坐标
         GetCursorPos(&p);//获取鼠标坐标
         ClientToScreen(WinId,&p);//转换成窗口坐标
-        for (int var= 0;;var++) {
-            if(wParam==WM_MOUSEMOVE){
-                SendMessage(WinId,wParam,0,MAKEWPARAM(p.x,p.y));//move消息时的处理
-                break;
-            }
-            if(wParam&codes[var]){
-                SendMessage(WinId,wParam,codes[var],MAKEWPARAM(p.x,p.y));//与编码匹配上之后发送消息~
-                break;
-            }
-        }
-
+        //给buttonMsg赋值
+        if(wParam&MK_LBUTTON)
+            buttonMsg=MK_LBUTTON;
+            else if(wParam&MK_MBUTTON)
+                buttonMsg=MK_MBUTTON;
+                else if(wParam&MK_RBUTTON)
+                    buttonMsg=MK_MBUTTON;
+                    else if(lastMsg==WM_MOUSEMOVE)
+                        buttonMsg=0;
+        SendMessage(WinId,wParam,buttonMsg,MAKEWPARAM(p.x,p.y));
+        if(wParam==lastMsg)
+            lastMsg=wParam;//将二者比较，判断状态变化，用于响应拖拽消息
     }
+
     return CallNextHookEx(mouseHook,nCode,wParam,lParam);//下一个钩子
 }
 

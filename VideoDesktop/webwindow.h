@@ -2,6 +2,7 @@
 #define WEBWINDOW_H
 
 #include <QMainWindow>
+#include <QMouseEvent>
 #include "mywebengnineview.h"
 #include "mousehook.h"
 
@@ -22,6 +23,8 @@ private:
     Ui::WebWindow *ui;
     MyWebEngnineView *view;//浏览器
     MouseHook mHook;//钩子类
+protected:
+    bool nativeEvent(const QByteArray &eventType, void *message, long *result);//获取本地事件
 };
 
 #endif // WEBWINDOW_H

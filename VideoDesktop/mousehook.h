@@ -14,5 +14,4 @@ public:
     void UnHook();//卸载钩子
     void SetWnd(HWND h);//设置消息发送对象
 };
-
 #endif // MOUSEHOOK_H

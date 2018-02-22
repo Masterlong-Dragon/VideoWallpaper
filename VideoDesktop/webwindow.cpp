@@ -12,6 +12,7 @@ WebWindow::WebWindow(QWidget *parent) :
 
 WebWindow::~WebWindow()
 {
+    view->installEventFilter(this);//加载事件过滤器
     mHook.UnHook();//卸载钩子
     view->deleteLater();
 }
@@ -28,4 +29,12 @@ void WebWindow::StopPlay()
 {
     mHook.UnHook();//卸载钩子
     view->load(QUrl(""));//加载一个空网页
+}
+
+bool WebWindow::nativeEvent(const QByteArray &eventType, void *message, long *result)//获取本地事件
+{
+    MSG* msg = static_cast<MSG*>(message);
+    if(msg->message==WM_MOUSELEAVE)
+        return true;//这里是为了去掉本来不该存在的mouseleave消息（邪术）
+    return false;
 }
